@@ -1,4 +1,4 @@
-# clone-x-fronted
+# clone-x-frontend
 
 ## Project setup
 ```
