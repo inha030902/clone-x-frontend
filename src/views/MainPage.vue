@@ -6,57 +6,33 @@
       <span class="user-name">{{ userName }}님</span>
     </div>
 
-    <!-- 피드 입력: 공통 컴포넌트(InputField) 사용 (rule.1) -->
+    <!-- 피드 입력 (공통 컴포넌트 InputField) -->
     <div class="feed-input">
       <InputField
         type="text"
         :placeholder="`what's good, ${userName}?`"
         v-model="newContent"
       />
-      <button class="post-button" @click="addFeed">🐦</button>
+      <button class="post-button">🐦</button>
     </div>
 
-    <!-- 피드 리스트: v-for로 반복 (rule.2), 각 Feed에 props로 데이터 전달 (rule.3) -->
-    <Feed
-      v-for="feed in feeds"
-      :key="feed.id"
-      :feed="feed"
-    />
+    <!-- 피드 리스트: 데이터·초기화는 FeedList가 담당 -->
+    <FeedList />
   </div>
 </template>
 
 <script>
 import InputField from '@/components/InputField.vue'
-import Feed from '@/components/Feed.vue'
+import FeedList from '@/components/FeedList.vue'
 
 export default {
   name: 'MainPage',
-  components: { InputField, Feed },
+  components: { InputField, FeedList },
   data() {
     return {
-      userName: '최인하', // 화면에 표시할 사용자 이름
-      newContent: '',     // 입력창에 적히는 새 피드 내용
-      // 피드 목록 (v-for로 돌릴 데이터)
-      feeds: [
-        { id: 1, content: '안녕하세요', user: { name: '최인하' } },
-        { id: 2, content: '안녕하세요', user: { name: '최인하' } },
-        { id: 3, content: '안녕하세요', user: { name: '최인하' } },
-        { id: 4, content: '안녕하세요', user: { name: '최인하' } },
-        { id: 5, content: '안녕하세요', user: { name: '최인하' } },
-      ],
+      userName: '최인하',
+      newContent: '',
     }
-  },
-  methods: {
-    // 입력한 내용을 새 피드로 목록 맨 위에 추가
-    addFeed() {
-      if (!this.newContent) return
-      this.feeds.unshift({
-        id: Date.now(),
-        content: this.newContent,
-        user: { name: this.userName },
-      })
-      this.newContent = '' // 입력창 비우기
-    },
   },
 }
 </script>

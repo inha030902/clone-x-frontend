@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  name: 'FeedItem',
   props: {
     feed: { type: Object, required: true },
   },
