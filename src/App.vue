@@ -1,6 +1,5 @@
 <template>
   <div class="app">
-    <!-- 현재 주소에 맞는 페이지가 여기에 표시됨 -->
     <router-view />
   </div>
 </template>
@@ -23,5 +22,19 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+}
+
+/* 로그인 · 회원가입 공통 버튼 스타일 */
+.button {
+  border-radius: 20px;
+  border: 1px solid white;
+  background-color: white;
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
 }
 </style>
