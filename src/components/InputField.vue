@@ -5,32 +5,38 @@
       :placeholder="placeholder"
       :value="modelValue"
       @input="onInput"
-      @blur="touched = true"
+      @blur="isTouched = true"
       class="input"
     />
-    <!-- 값이 비어 있고 한 번이라도 입력창을 벗어났으면 에러 메시지 표시 -->
-    <p v-if="touched && !modelValue" class="error">{{ errorMsg }}</p>
+    <!-- showError가 true일 때만 에러 문구 표시 -->
+    <span v-if="showError" class="error">{{ errorMsg }}</span>
   </div>
 </template>
 
 <script>
 export default {
   name: 'InputField',
-  // props: 부모(LoginPage)에서 내려받는 값
+  // props: 부모(SignupPage)에서 내려받는 값
   props: {
     type: { type: String, default: 'text' },
     placeholder: { type: String, default: '' },
     modelValue: { type: String, default: '' },
     errorMsg: { type: String, default: '' },
   },
-  // emit: 부모에게 값을 되돌려줄 때 쓰는 이벤트
   emits: ['update:modelValue'],
   data() {
-    return { touched: false }
+    return { isTouched: false } // 입력창을 한 번이라도 건드렸는지
+  },
+  computed: {
+    // 에러 표시 조건을 computed로 판단 (이번 강의 주제)
+    // 1) 입력창을 건드렸고  2) 값이 비었고  3) 보여줄 에러 문구가 있을 때만 true
+    showError() {
+      return this.isTouched && !this.modelValue && this.errorMsg
+    },
   },
   methods: {
     onInput(event) {
-      // 입력할 때마다 부모의 v-model 값을 갱신
+      // 입력할 때마다 부모의 v-model 값을 갱신 (emit)
       this.$emit('update:modelValue', event.target.value)
     },
   },
@@ -52,8 +58,9 @@ export default {
   box-sizing: border-box;
 }
 .error {
+  display: block;
   color: #ff5555;
   font-size: 12px;
-  margin: 4px 0 0;
+  margin-top: 4px;
 }
 </style>
