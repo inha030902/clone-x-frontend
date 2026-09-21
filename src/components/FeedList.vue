@@ -1,10 +1,8 @@
 <template>
   <div class="feed-list-container">
-    <!-- 피드가 하나라도 있으면 목록 표시 -->
-    <div v-if="initFeedData.length > 0">
-      <FeedItem v-for="feed in initFeedData" :key="feed.id" :feed="feed" />
+    <div v-if="feedStore.feedData.length > 0">
+      <FeedItem v-for="feed in feedStore.feedData" :key="feed.id" :feed="feed" />
     </div>
-    <!-- 비어 있으면 안내 문구 표시 -->
     <div v-else>
       <div>피드가 없습니다.</div>
     </div>
@@ -13,31 +11,18 @@
 
 <script>
 import FeedItem from '@/components/FeedItem.vue'
-
-// 초기화용 데이터
-const testData = [
-  { id: 11, content: '코딩은 재밌어!', user: { id: 12, name: '테스터' } },
-  { id: 10, content: 'JS 디버깅 중…', user: { id: 12, name: '테스터' } },
-  { id: 9, content: '커피 한 잔의 여유...', user: { id: 13, name: '다미장' } },
-  { id: 6, content: '주말에 드라마 몰아보기', user: { id: 13, name: '다미장' } },
-  { id: 5, content: '우리 집 강아지 너무 귀여워', user: { id: 13, name: '다미장' } },
-  { id: 4, content: '2025년에는 꼭 운동한다!', user: { id: 11, name: 'user' } },
-  { id: 3, content: '디버깅만 몇 시간째…', user: { id: 11, name: 'user' } },
-  { id: 2, content: '아침 커피로 하루 시작', user: { id: 11, name: 'user' } },
-  { id: 1, content: '오늘도 멋진 하루 되세요!', user: { id: 11, name: 'user' } },
-]
+import { useFeedStore } from '@/store/feed'
 
 export default {
   name: 'FeedList',
   components: { FeedItem },
   data() {
     return {
-      initFeedData: [], // 처음엔 빈 배열
+      feedStore: useFeedStore(), // 스토어 연결
     }
   },
-  // 컴포넌트 생성 시점에 초기 데이터 주입 (rule.1)
   created() {
-    this.initFeedData = testData
+    this.feedStore.getFeedData() // action 호출로 초기 데이터 주입 (rule.3)
   },
 }
 </script>
