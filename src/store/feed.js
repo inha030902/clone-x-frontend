@@ -22,5 +22,9 @@ export const useFeedStore = defineStore('feedStore', {
     getFeedData() {
       this.feedData = testData
     },
+    // action: id로 피드 아이템 삭제 (rule.4)
+    deleteFeed(id) {
+      this.feedData = this.feedData.filter((feed) => feed.id !== id)
+    },
   },
 })
